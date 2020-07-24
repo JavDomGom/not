@@ -27,8 +27,8 @@ func Register(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	_, encontrado, _ := db.UserAlreadyExists(t.Email)
-	if encontrado == true {
+	_, found, _ := db.CheckIfUserAlreadyExists(t.Email)
+	if found {
 		http.Error(w, "There is already a registered user with this email.", 400)
 		return
 	}
@@ -39,7 +39,7 @@ func Register(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	if status == false {
+	if !status {
 		http.Error(w, "The user record could not be inserted.: ", 400)
 		return
 	}

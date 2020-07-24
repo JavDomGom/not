@@ -8,9 +8,9 @@ import (
 	"go.mongodb.org/mongo-driver/bson"
 )
 
-/*UserAlreadyExists Receive an email as a parameter and check
-if there is already a registered user with that email.*/
-func UserAlreadyExists(email string) (models.User, bool, string) {
+/*CheckIfUserAlreadyExists Receive an email as a parameter and
+check if there is already a registered user with that email.*/
+func CheckIfUserAlreadyExists(email string) (models.User, bool, string) {
 	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
 	defer cancel()
 
