@@ -12,12 +12,12 @@ import (
 /*Email value used on all endpoints.*/
 var Email string
 
-/*UserID Returned ID from the model, which will be used on all endpoints. */
-var UserID string
+/*IDUsuer Returned ID from the model, which will be used on all endpoints. */
+var IDUsuer string
 
 /*ProcessToken Function to manage the token. */
 func ProcessToken(tk string) (*models.Claim, bool, string, error) {
-	myKey := []byte("NwodSeogNworbYbbob")
+	myKey := []byte("nw987q2n2")
 	claims := &models.Claim{}
 
 	splitToken := strings.Split(tk, "Bearer")
@@ -34,9 +34,9 @@ func ProcessToken(tk string) (*models.Claim, bool, string, error) {
 		_, found, _ := db.CheckIfUserAlreadyExists(claims.Email)
 		if found {
 			Email = claims.Email
-			UserID = claims.ID.Hex()
+			IDUsuer = claims.ID.Hex()
 		}
-		return claims, found, UserID, nil
+		return claims, found, IDUsuer, nil
 	}
 	if !tkn.Valid {
 		return claims, false, string(""), errors.New("invalid token")
