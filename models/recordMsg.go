@@ -2,7 +2,7 @@ package models
 
 import "time"
 
-/*RecordMsg Structure of the message. */
+/*RecordMsg Structure for message. */
 type RecordMsg struct {
 	UserID   string    `bson:"userId" json:"userId,omitempty"`
 	Msg      string    `bson:"msg" json:"msg,omitempty"`

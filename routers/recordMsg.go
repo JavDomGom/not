@@ -15,7 +15,7 @@ func RecordMsg(w http.ResponseWriter, r *http.Request) {
 	err := json.NewDecoder(r.Body).Decode(&msg)
 
 	register := models.RecordMsg{
-		UserID:   IDUsuer,
+		UserID:   IDUser,
 		Msg:      msg.Message,
 		Datetime: time.Now(),
 	}

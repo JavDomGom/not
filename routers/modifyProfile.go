@@ -21,7 +21,7 @@ func ModifyProfile(w http.ResponseWriter, r *http.Request) {
 
 	var status bool
 
-	status, err = db.ModifyRegister(t, IDUsuer)
+	status, err = db.ModifyRegister(t, IDUser)
 	if err != nil {
 		http.Error(w, "An error occurred while trying to modify the register. "+err.Error(), 400)
 		return

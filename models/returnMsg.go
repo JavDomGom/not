@@ -9,7 +9,7 @@ import (
 /*ReturnMsg Structure to return each message. */
 type ReturnMsg struct {
 	ID       primitive.ObjectID `bson:"_id" json:"_id,omitempty"`
-	UserID   string             `bson:"userid" json:"userid,omitempty"`
-	Message  string             `bson:"message" json:"message,omitempty"`
+	UserID   string             `bson:"userid" json:"userId,omitempty"`
+	Msg      string             `bson:"msg" json:"msg,omitempty"`
 	Datetime time.Time          `bson:"datetime" json:"datetime,omitempty"`
 }

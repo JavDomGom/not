@@ -40,9 +40,9 @@ func Register(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if !status {
-		http.Error(w, "The user record could not be inserted.: ", 400)
+		http.Error(w, "User could not be saved in database: ", 400)
 		return
 	}
-
+	w.Header().Set("context-type", "application/json")
 	w.WriteHeader(http.StatusCreated)
 }

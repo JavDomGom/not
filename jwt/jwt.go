@@ -9,7 +9,7 @@ import (
 
 /*GenerateJWT Encrypt with JWT. */
 func GenerateJWT(t models.User) (string, error) {
-	myKey := []byte("nw987q2n2")
+	myKey := []byte("30a7b238f1")
 
 	payload := jwt.MapClaims{
 		"email":       t.Email,

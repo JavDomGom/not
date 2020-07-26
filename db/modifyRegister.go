@@ -21,23 +21,25 @@ func ModifyRegister(u models.User, ID string) (bool, error) {
 	if len(u.Name) > 0 {
 		register["name"] = u.Name
 	}
-	if len(u.Name) > 0 {
+	if len(u.LastName) > 0 {
 		register["lastName"] = u.LastName
 	}
-	register["dateOfBirth"] = u.DateOfBirth
-	if len(u.Name) > 0 {
+	if !u.DateOfBirth.IsZero() {
+		register["dateOfBirth"] = u.DateOfBirth
+	}
+	if len(u.Avatar) > 0 {
 		register["avatar"] = u.Avatar
 	}
-	if len(u.Name) > 0 {
+	if len(u.Banner) > 0 {
 		register["banner"] = u.Banner
 	}
-	if len(u.Name) > 0 {
+	if len(u.Biography) > 0 {
 		register["biography"] = u.Biography
 	}
-	if len(u.Name) > 0 {
+	if len(u.Location) > 0 {
 		register["location"] = u.Location
 	}
-	if len(u.Name) > 0 {
+	if len(u.WebSite) > 0 {
 		register["webSite"] = u.WebSite
 	}
 
