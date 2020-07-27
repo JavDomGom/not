@@ -15,11 +15,11 @@ import (
 func Handlers() {
 	router := mux.NewRouter()
 
-	router.HandleFunc("/register", middleware.CheckDB(routers.Register)).Methods("POST")
+	router.HandleFunc("/signup", middleware.CheckDB(routers.SignUp)).Methods("POST")
 	router.HandleFunc("/login", middleware.CheckDB(routers.Login)).Methods("POST")
 	router.HandleFunc("/profile", middleware.CheckDB(middleware.ValidateJWT(routers.Profile))).Methods("GET")
 	router.HandleFunc("/modifyProfile", middleware.CheckDB(middleware.ValidateJWT(routers.ModifyProfile))).Methods("PUT")
-	router.HandleFunc("/msg", middleware.CheckDB(middleware.ValidateJWT(routers.RecordMsg))).Methods("POST")
+	router.HandleFunc("/message", middleware.CheckDB(middleware.ValidateJWT(routers.RecordMsg))).Methods("POST")
 	router.HandleFunc("/readMsg", middleware.CheckDB(middleware.ValidateJWT(routers.ReadMsg))).Methods("GET")
 	router.HandleFunc("/deleteMsg", middleware.CheckDB(middleware.ValidateJWT(routers.DeleteMsg))).Methods("DELETE")
 
@@ -27,13 +27,6 @@ func Handlers() {
 	router.HandleFunc("/getAvatar", middleware.CheckDB(routers.GetAvatar)).Methods("GET")
 	router.HandleFunc("/uploadBanner", middleware.CheckDB(middleware.ValidateJWT(routers.UploadBanner))).Methods("POST")
 	router.HandleFunc("/getBanner", middleware.CheckDB(routers.GetBanner)).Methods("GET")
-
-	router.HandleFunc("/newRelation", middleware.CheckDB(middleware.ValidateJWT(routers.NewRelation))).Methods("POST")
-	router.HandleFunc("/deleteRelation", middleware.CheckDB(middleware.ValidateJWT(routers.DeleteRelation))).Methods("DELETE")
-	router.HandleFunc("/checkRelation", middleware.CheckDB(middleware.ValidateJWT(routers.CheckRelation))).Methods("GET")
-
-	router.HandleFunc("/getUsers", middleware.CheckDB(middleware.ValidateJWT(routers.GetUsers))).Methods("GET")
-	router.HandleFunc("/getFollowersMsg", middleware.CheckDB(middleware.ValidateJWT(routers.GetFollowersMsg))).Methods("GET")
 
 	PORT := os.Getenv("PORT")
 	if PORT == "" {

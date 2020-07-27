@@ -20,6 +20,6 @@ func DeleteMsg(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	w.Header().Set("context-type", "application/json")
+	w.Header().Set("Content-type", "application/json")
 	w.WriteHeader(http.StatusCreated)
 }

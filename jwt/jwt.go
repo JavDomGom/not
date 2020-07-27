@@ -9,7 +9,8 @@ import (
 
 /*GenerateJWT Encrypt with JWT. */
 func GenerateJWT(t models.User) (string, error) {
-	myKey := []byte("30a7b238f1")
+
+	miClave := []byte("aaaaaaaaaaaaaaaaa")
 
 	payload := jwt.MapClaims{
 		"email":       t.Email,
@@ -18,13 +19,13 @@ func GenerateJWT(t models.User) (string, error) {
 		"dateOfBirth": t.DateOfBirth,
 		"biography":   t.Biography,
 		"location":    t.Location,
-		"website":     t.WebSite,
+		"webSite":     t.WebSite,
 		"_id":         t.ID.Hex(),
 		"exp":         time.Now().Add(time.Hour * 24).Unix(),
 	}
 
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, payload)
-	tokenStr, err := token.SignedString(myKey)
+	tokenStr, err := token.SignedString(miClave)
 	if err != nil {
 		return tokenStr, err
 	}

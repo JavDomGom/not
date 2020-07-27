@@ -13,8 +13,8 @@ func LoginAttemp(email string, password string) (models.User, bool) {
 	}
 
 	passwordBytes := []byte(password)
-	passwordDB := []byte(user.Password)
-	err := bcrypt.CompareHashAndPassword(passwordDB, passwordBytes)
+	passwordBD := []byte(user.Password)
+	err := bcrypt.CompareHashAndPassword(passwordBD, passwordBytes)
 	if err != nil {
 		return user, false
 	}

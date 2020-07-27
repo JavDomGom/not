@@ -10,7 +10,7 @@ import (
 
 /*MongoCN is the connection object to the database.*/
 var MongoCN = ConnectDB()
-var clientOptions = options.Client().ApplyURI("mongodb+srv://jqw6olw2lkj:Wsxj0ebUJG7Pl5pU@cluster0.9emsq.mongodb.net/test_not?retryWrites=true&w=majority")
+var clientOptions = options.Client().ApplyURI("mongodb+srv://jqw6olw2lkj:Wsxj0ebUJG7Pl5pU@cluster0.9emsq.mongodb.net/not?retryWrites=true&w=majority")
 
 /*ConnectDB Function to connect to the database.*/
 func ConnectDB() *mongo.Client {
@@ -32,7 +32,6 @@ func ConnectDB() *mongo.Client {
 func CheckConnection() bool {
 	err := MongoCN.Ping(context.TODO(), nil)
 	if err != nil {
-		log.Fatal(err)
 		return false
 	}
 	return true

@@ -10,11 +10,11 @@ import (
 
 /*DeleteMsg delete a specific message. */
 func DeleteMsg(ID string, UserID string) error {
-	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), time.Second*15)
 	defer cancel()
 
-	db := MongoCN.Database("test_not")
-	col := db.Collection("msg")
+	db := MongoCN.Database("not")
+	col := db.Collection("messages")
 
 	objID, _ := primitive.ObjectIDFromHex(ID)
 

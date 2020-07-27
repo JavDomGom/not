@@ -8,12 +8,13 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
-/*InsertUserRegister Function to record the registration of a new user in the database. */
-func InsertUserRegister(u models.User) (string, bool, error) {
+/*InsertUser Function to record the registration of a new user in the database. */
+func InsertUser(u models.User) (string, bool, error) {
+
 	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
 	defer cancel()
 
-	db := MongoCN.Database("test_not")
+	db := MongoCN.Database("not")
 	col := db.Collection("users")
 
 	u.Password, _ = EncryptPassword(u.Password)

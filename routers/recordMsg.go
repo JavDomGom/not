@@ -11,16 +11,16 @@ import (
 
 /*RecordMsg record a message in database. */
 func RecordMsg(w http.ResponseWriter, r *http.Request) {
-	var msg models.Msg
-	err := json.NewDecoder(r.Body).Decode(&msg)
+	var message models.Msg
+	err := json.NewDecoder(r.Body).Decode(&message)
 
-	register := models.RecordMsg{
+	registro := models.RecordMsg{
 		UserID:   IDUser,
-		Msg:      msg.Message,
+		Message:  message.Message,
 		Datetime: time.Now(),
 	}
 
-	_, status, err := db.InsertMsg(register)
+	_, status, err := db.InsertMsg(registro)
 	if err != nil {
 		http.Error(w, "An error occurred while trying to insert the register. "+err.Error(), 400)
 		return
@@ -32,4 +32,5 @@ func RecordMsg(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.WriteHeader(http.StatusCreated)
+
 }

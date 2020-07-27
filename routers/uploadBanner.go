@@ -12,6 +12,7 @@ import (
 
 /*UploadBanner upload banner to server. */
 func UploadBanner(w http.ResponseWriter, r *http.Request) {
+
 	file, handler, err := r.FormFile("banner")
 	var extension = filepath.Ext(handler.Filename)
 	var filename string = "uploads/banners/" + IDUser + extension
@@ -24,20 +25,20 @@ func UploadBanner(w http.ResponseWriter, r *http.Request) {
 
 	_, err = io.Copy(f, file)
 	if err != nil {
-		http.Error(w, "Error copying image! "+err.Error(), http.StatusBadRequest)
-		return
-	}
-
-	var user models.User
-	var status bool
-
-	user.Banner = IDUser + extension
-	status, err = db.ModifyRegister(user, IDUser)
-	if err != nil || !status {
 		http.Error(w, "Failed to save banner to database! "+err.Error(), http.StatusBadRequest)
 		return
 	}
 
-	w.Header().Set("context-type", "application/json")
+	var username models.User
+	var status bool
+
+	username.Banner = IDUser + extension
+	status, err = db.ModifyProfile(username, IDUser)
+	if err != nil || status == false {
+		http.Error(w, "Failed to save banner to database! "+err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusCreated)
 }

@@ -2,7 +2,6 @@ package db
 
 import (
 	"context"
-	"fmt"
 	"time"
 
 	"github.com/JavierDominguezGomez/not/models"
@@ -10,12 +9,12 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
-/*SearchProfile Look for profile in database. */
-func SearchProfile(ID string) (models.User, error) {
+/*GetProfile Look for profile in database. */
+func GetProfile(ID string) (models.User, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), time.Second*15)
 	defer cancel()
 
-	db := MongoCN.Database("test_not")
+	db := MongoCN.Database("not")
 	col := db.Collection("users")
 
 	var profile models.User
@@ -28,7 +27,6 @@ func SearchProfile(ID string) (models.User, error) {
 	err := col.FindOne(ctx, condition).Decode(&profile)
 	profile.Password = ""
 	if err != nil {
-		fmt.Println("Register not found. " + err.Error())
 		return profile, err
 	}
 	return profile, nil

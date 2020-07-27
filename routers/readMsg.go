@@ -27,13 +27,13 @@ func ReadMsg(w http.ResponseWriter, r *http.Request) {
 	}
 
 	pag := int64(page)
-	response, correct := db.ReadMsg(ID, pag)
+	response, correct := db.GetMessages(ID, pag)
 	if !correct {
 		http.Error(w, "Error reading messages.", http.StatusBadRequest)
 		return
 	}
 
-	w.Header().Set("context-type", "application/json")
+	w.Header().Set("Content-type", "application/json")
 	w.WriteHeader(http.StatusCreated)
 	json.NewEncoder(w).Encode(response)
 }

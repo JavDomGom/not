@@ -17,7 +17,7 @@ var IDUser string
 
 /*ProcessToken Function to manage the token. */
 func ProcessToken(tk string) (*models.Claim, bool, string, error) {
-	myKey := []byte("30a7b238f1")
+	myKey := []byte("aaaaaaaaaaaaaaaaa")
 	claims := &models.Claim{}
 
 	splitToken := strings.Split(tk, "Bearer")
@@ -30,7 +30,7 @@ func ProcessToken(tk string) (*models.Claim, bool, string, error) {
 	tkn, err := jwt.ParseWithClaims(tk, claims, func(token *jwt.Token) (interface{}, error) {
 		return myKey, nil
 	})
-	if err != nil {
+	if err == nil {
 		_, found, _ := db.CheckIfUserAlreadyExists(claims.Email)
 		if found {
 			Email = claims.Email

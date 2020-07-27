@@ -10,13 +10,14 @@ import (
 
 /*GetBanner sends banner to HTTP. */
 func GetBanner(w http.ResponseWriter, r *http.Request) {
+
 	ID := r.URL.Query().Get("id")
 	if len(ID) < 1 {
 		http.Error(w, "You must send the id parameter.", http.StatusBadRequest)
 		return
 	}
 
-	profile, err := db.SearchProfile(ID)
+	profile, err := db.GetProfile(ID)
 	if err != nil {
 		http.Error(w, "User not found.", http.StatusBadRequest)
 		return
@@ -31,6 +32,5 @@ func GetBanner(w http.ResponseWriter, r *http.Request) {
 	_, err = io.Copy(w, OpenFile)
 	if err != nil {
 		http.Error(w, "Error copying image.", http.StatusBadRequest)
-		return
 	}
 }

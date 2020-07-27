@@ -4,9 +4,10 @@ import (
 	"context"
 	"time"
 
+	"go.mongodb.org/mongo-driver/bson/primitive"
+
 	"github.com/JavierDominguezGomez/not/models"
 	"go.mongodb.org/mongo-driver/bson"
-	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 /*InsertMsg records a msg in database. */
@@ -14,12 +15,12 @@ func InsertMsg(t models.RecordMsg) (string, bool, error) {
 	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
 	defer cancel()
 
-	db := MongoCN.Database("test_not")
-	col := db.Collection("msg")
+	db := MongoCN.Database("not")
+	col := db.Collection("messages")
 
 	register := bson.M{
 		"userId":   t.UserID,
-		"msg":      t.Msg,
+		"message":  t.Message,
 		"datetime": t.Datetime,
 	}
 	result, err := col.InsertOne(ctx, register)

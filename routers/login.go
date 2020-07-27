@@ -10,7 +10,7 @@ import (
 	"github.com/JavierDominguezGomez/not/models"
 )
 
-/*Login make login. */
+/*Login Do login. */
 func Login(w http.ResponseWriter, r *http.Request) {
 	w.Header().Add("content-type", "application/json")
 
@@ -22,12 +22,11 @@ func Login(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	if len(t.Email) == 0 {
-		http.Error(w, "The email is required.", 400)
+		http.Error(w, "Invalid username or password.", 400)
 		return
 	}
-
-	document, exist := db.LoginAttemp(t.Email, t.Password)
-	if !exist {
+	document, exists := db.LoginAttemp(t.Email, t.Password)
+	if !exists {
 		http.Error(w, "Invalid username or password.", 400)
 		return
 	}
@@ -38,15 +37,14 @@ func Login(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	response := models.LoginResponse{
+	resp := models.LoginResponse{
 		Token: jwtKey,
 	}
 
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusCreated)
-	json.NewEncoder(w).Encode(response)
+	json.NewEncoder(w).Encode(resp)
 
-	// Make cookie from backend.
 	expirationTime := time.Now().Add(24 * time.Hour)
 	http.SetCookie(w, &http.Cookie{
 		Name:    "token",

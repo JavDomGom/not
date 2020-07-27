@@ -9,42 +9,42 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
-/*ModifyRegister modify the user's profile. */
-func ModifyRegister(u models.User, ID string) (bool, error) {
-	ctx, cancel := context.WithTimeout(context.Background(), time.Second*15)
+/*ModifyProfile modify the user's profile. */
+func ModifyProfile(u models.User, ID string) (bool, error) {
+	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
 	defer cancel()
 
-	db := MongoCN.Database("test_not")
+	db := MongoCN.Database("not")
 	col := db.Collection("users")
 
-	register := make(map[string]interface{})
+	profile := make(map[string]interface{})
 	if len(u.Name) > 0 {
-		register["name"] = u.Name
+		profile["name"] = u.Name
 	}
 	if len(u.LastName) > 0 {
-		register["lastName"] = u.LastName
+		profile["lastName"] = u.LastName
 	}
 	if !u.DateOfBirth.IsZero() {
-		register["dateOfBirth"] = u.DateOfBirth
+		profile["dateOfBirth"] = u.DateOfBirth
 	}
 	if len(u.Avatar) > 0 {
-		register["avatar"] = u.Avatar
+		profile["avatar"] = u.Avatar
 	}
 	if len(u.Banner) > 0 {
-		register["banner"] = u.Banner
+		profile["banner"] = u.Banner
 	}
 	if len(u.Biography) > 0 {
-		register["biography"] = u.Biography
+		profile["biography"] = u.Biography
 	}
 	if len(u.Location) > 0 {
-		register["location"] = u.Location
+		profile["location"] = u.Location
 	}
 	if len(u.WebSite) > 0 {
-		register["webSite"] = u.WebSite
+		profile["webSite"] = u.WebSite
 	}
 
 	updtString := bson.M{
-		"$set": register,
+		"$set": profile,
 	}
 
 	objID, _ := primitive.ObjectIDFromHex(ID)

@@ -2,7 +2,6 @@ package db
 
 import (
 	"context"
-	"log"
 	"time"
 
 	"github.com/JavierDominguezGomez/not/models"
@@ -10,15 +9,14 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-/*ReadMsg read messages from a profile. */
-func ReadMsg(ID string, page int64) ([]*models.ReturnMsg, bool) {
+/*GetMessages Get all messages from a profile. */
+func GetMessages(ID string, page int64) ([]*models.ReturnMsg, bool) {
 	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
 	defer cancel()
+	db := MongoCN.Database("not")
+	col := db.Collection("messages")
 
-	db := MongoCN.Database("test_not")
-	col := db.Collection("msg")
-
-	var results []*models.ReturnMsg
+	var messages []*models.ReturnMsg
 
 	condition := bson.M{
 		"userId": ID,
@@ -31,17 +29,17 @@ func ReadMsg(ID string, page int64) ([]*models.ReturnMsg, bool) {
 
 	cursor, err := col.Find(ctx, condition, opts)
 	if err != nil {
-		log.Fatal(err.Error())
-		return results, false
+		return messages, false
 	}
 
 	for cursor.Next(context.TODO()) {
-		var register models.ReturnMsg
-		err := cursor.Decode(&register)
+
+		var msg models.ReturnMsg
+		err := cursor.Decode(&msg)
 		if err != nil {
-			return results, false
+			return messages, false
 		}
-		results = append(results, &register)
+		messages = append(messages, &msg)
 	}
-	return results, true
+	return messages, true
 }

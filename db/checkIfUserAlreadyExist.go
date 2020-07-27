@@ -14,7 +14,7 @@ func CheckIfUserAlreadyExists(email string) (models.User, bool, string) {
 	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
 	defer cancel()
 
-	db := MongoCN.Database("test_not")
+	db := MongoCN.Database("not")
 	col := db.Collection("users")
 
 	condition := bson.M{"email": email}
@@ -23,7 +23,6 @@ func CheckIfUserAlreadyExists(email string) (models.User, bool, string) {
 
 	err := col.FindOne(ctx, condition).Decode(&result)
 	ID := result.ID.Hex()
-
 	if err != nil {
 		return result, false, ID
 	}

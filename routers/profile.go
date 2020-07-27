@@ -16,7 +16,7 @@ func Profile(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	profile, err := db.SearchProfile(ID)
+	profile, err := db.GetProfile(ID)
 	if err != nil {
 		http.Error(w, "An error occurred while trying to find the record. "+err.Error(), 400)
 		return
