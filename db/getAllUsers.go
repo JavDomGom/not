@@ -24,7 +24,10 @@ func GetAllUsers(ID string, page int64, search string, userType string) ([]*mode
 	findOptions.SetLimit(20)
 
 	query := bson.M{
-		"name": bson.M{"$regex": `(?i)` + search},
+		"$or": []bson.M{
+			bson.M{"name": bson.M{"$regex": `(?i)` + search}},
+			bson.M{"lastName": bson.M{"$regex": `(?i)` + search}},
+		},
 	}
 
 	cur, err := col.Find(ctx, query, findOptions)
